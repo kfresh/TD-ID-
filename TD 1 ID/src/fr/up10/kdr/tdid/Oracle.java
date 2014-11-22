@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Oracle 
@@ -51,4 +52,15 @@ public class Oracle
             System.err.println("Erreur de deconnexion à la base de données.");
         }    
     }
+    
+    public HashMap <Integer, Integer> nbHeuresEnseignant( HashMap <Integer,Integer> hs ){
+ 
+    	return hs;
+    }
+
+	public Integer nbEtuOrigFrance(Integer nb) {
+		return nb;
+		
+		
+	}
 }

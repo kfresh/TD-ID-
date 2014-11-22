@@ -41,17 +41,17 @@ public class XML {
 		}
 	}
 	
-	public int nbHeuresEnseignant(String path_fichier) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
+	public HashMap <Integer, Integer> nbHeuresEnseignant(String path_fichier, HashMap <Integer,Integer> hs ) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(new FileInputStream(path_fichier));
-		Node node ;
+		//Node node ;
 		Element E, E_1;
 		
-		//liste des etudiants
+		//liste des enseignants
 		NodeList enseignants = ((org.w3c.dom.Document) doc).getElementsByTagName("Enseigne");
 		NodeList L ;
 		
-		HashMap <Integer,Integer> hs = new HashMap <Integer,Integer>();
+
 		
 		for (int index =0 ; index < enseignants.getLength(); index++)
 		{
@@ -73,15 +73,50 @@ public class XML {
 							}
 			else {
 				nb += NbHeure;
+				hs.put(NumEns, nb);
 			}
 			
 			
 		}
 		
-		System.out.println(hs.get(1));
 		
 		
-		return 0;
+		
+		
+		return hs;
+		
+	}
+	
+	public Integer nbEtuOrigFrance (String path_fichier, Integer nb ) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(new FileInputStream(path_fichier));
+		
+		Element E, E_1;
+		Integer i = 0;
+		//liste des enseignants
+		NodeList etudiants = ((org.w3c.dom.Document) doc).getElementsByTagName("Etudiant");
+		NodeList L ;
+		
+		for (int index =0 ; index < etudiants.getLength(); index++)
+		{
+			
+			
+			E = (Element) etudiants.item(index);
+			
+			L =  E.getElementsByTagName("Provenance");
+			E_1 = (Element) L.item(0); 
+			
+			System.out.println(E_1.getTextContent());
+			
+			if (E_1.getTextContent().contains("France")) {
+				i++;
+				
+			}			
+			
+		}
+		nb=nb+i;
+		//System.out.println(nb);
+		return nb;
 		
 	}
 	
