@@ -181,7 +181,6 @@ public class Mediateur {
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S3"))
 		{
 		nb = monXML.nbEtuOrigFrance("Univ_BD_3.xml", nb);
-		System.out.println(nb);
 		}
 		
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S2"))
@@ -191,7 +190,22 @@ public class Mediateur {
 		System.out.println("il y a " + nb.toString() + " étudiants provenant de France");
 		
 		
+	}
+	
+	public void nbCourspType () throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
+		HashMap<String, Integer> hs =new HashMap<String, Integer>();
 		
+		hs.put("CM", new Integer(0));
+		hs.put("TD", new Integer(0));
+		hs.put("TP", new Integer(0));
+		
+		if (dictionnaire.get("Cours").get("Type").contains("S3"))
+		{
+		monXML.nbCoursPType("Univ_BD_3.xml", hs);
+		System.out.println(hs.get("CM").toString()+ " Cours Magistaux");
+		System.out.println(hs.get("TD").toString()+ " Travaux dirigés");
+		System.out.println(hs.get("TP").toString()+ " Travaux pratiques");
+		}
 	}
 
 }

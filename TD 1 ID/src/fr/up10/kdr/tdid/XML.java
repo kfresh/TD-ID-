@@ -15,109 +15,159 @@ import org.xml.sax.SAXException;
 
 public class XML {
 
-	public void lire_XML (String path_fichier) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
-		
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(new FileInputStream(path_fichier));
-		Node node ;
+	public void lire_XML(String path_fichier) throws FileNotFoundException,
+			SAXException, IOException, ParserConfigurationException {
+
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(
+				new FileInputStream(path_fichier));
+		Node node;
 		Element E, E_1;
-		
-		//liste des etudiants
-		NodeList etudiants = ((org.w3c.dom.Document) doc).getElementsByTagName("Etudiant");
-		NodeList L ;
-		
-		for (int index =0 ; index < etudiants.getLength(); index++)
-		{
+
+		// liste des etudiants
+		NodeList etudiants = ((org.w3c.dom.Document) doc)
+				.getElementsByTagName("Etudiant");
+		NodeList L;
+
+		for (int index = 0; index < etudiants.getLength(); index++) {
 			// un etudiant
 			E = (Element) etudiants.item(index);
-			
-			L =  E.getElementsByTagName("NumEt");
+
+			L = E.getElementsByTagName("NumEt");
 			E_1 = (Element) L.item(0); // un seul noeud NumEt
-			System.out.println("num etudiant "+E_1.getTextContent());
-			
-			L =  E.getElementsByTagName("nom");
-			E_1 = (Element) L.item(0); 
-			System.out.println("num etudiant "+E_1.getTextContent());
+			System.out.println("num etudiant " + E_1.getTextContent());
+
+			L = E.getElementsByTagName("nom");
+			E_1 = (Element) L.item(0);
+			System.out.println("num etudiant " + E_1.getTextContent());
 		}
 	}
-	
-	public HashMap <Integer, Integer> nbHeuresEnseignant(String path_fichier, HashMap <Integer,Integer> hs ) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(new FileInputStream(path_fichier));
-		//Node node ;
-		Element E, E_1;
-		
-		//liste des enseignants
-		NodeList enseignants = ((org.w3c.dom.Document) doc).getElementsByTagName("Enseigne");
-		NodeList L ;
-		
 
-		
-		for (int index =0 ; index < enseignants.getLength(); index++)
-		{
-			
-			
+	public HashMap<Integer, Integer> nbHeuresEnseignant(String path_fichier,
+			HashMap<Integer, Integer> hs) throws FileNotFoundException,
+			SAXException, IOException, ParserConfigurationException {
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(
+				new FileInputStream(path_fichier));
+		// Node node ;
+		Element E, E_1;
+
+		// liste des enseignants
+		NodeList enseignants = ((org.w3c.dom.Document) doc)
+				.getElementsByTagName("Enseigne");
+		NodeList L;
+
+		for (int index = 0; index < enseignants.getLength(); index++) {
+
 			E = (Element) enseignants.item(index);
-			
-			L =  E.getElementsByTagName("NumEns");
+
+			L = E.getElementsByTagName("NumEns");
 			E_1 = (Element) L.item(0); // un seul noeud NumEt
-			Integer NumEns= Integer.parseInt(E_1.getTextContent());
-			
-			L =  E.getElementsByTagName("Nb_heures");
-			E_1 = (Element) L.item(0); 
-			Integer NbHeure= Integer.parseInt(E_1.getTextContent());
-			
+			Integer NumEns = Integer.parseInt(E_1.getTextContent());
+
+			L = E.getElementsByTagName("Nb_heures");
+			E_1 = (Element) L.item(0);
+			Integer NbHeure = Integer.parseInt(E_1.getTextContent());
+
 			Integer nb = hs.get(NumEns);
-			if (nb ==null){
+			if (nb == null) {
 				hs.put(NumEns, NbHeure);
-							}
-			else {
+			} else {
 				nb += NbHeure;
 				hs.put(NumEns, nb);
 			}
-			
-			
+
 		}
-		
-		
-		
-		
-		
+
 		return hs;
-		
+
 	}
-	
-	public Integer nbEtuOrigFrance (String path_fichier, Integer nb ) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(new FileInputStream(path_fichier));
-		
+
+	public Integer nbEtuOrigFrance(String path_fichier, Integer nb)
+			throws FileNotFoundException, SAXException, IOException,
+			ParserConfigurationException {
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(
+				new FileInputStream(path_fichier));
+
 		Element E, E_1;
 		Integer i = 0;
-		//liste des enseignants
-		NodeList etudiants = ((org.w3c.dom.Document) doc).getElementsByTagName("Etudiant");
-		NodeList L ;
-		
-		for (int index =0 ; index < etudiants.getLength(); index++)
-		{
-			
-			
+		// liste des enseignants
+		NodeList etudiants = ((org.w3c.dom.Document) doc)
+				.getElementsByTagName("Etudiant");
+		NodeList L;
+
+		for (int index = 0; index < etudiants.getLength(); index++) {
+
 			E = (Element) etudiants.item(index);
+
+			L = E.getElementsByTagName("Provenance");
+			E_1 = (Element) L.item(0);
+
 			
-			L =  E.getElementsByTagName("Provenance");
-			E_1 = (Element) L.item(0); 
-			
-			System.out.println(E_1.getTextContent());
-			
+
 			if (E_1.getTextContent().contains("France")) {
 				i++;
-				
-			}			
-			
+
+			}
+
 		}
-		nb=nb+i;
-		//System.out.println(nb);
+		nb = nb + i;
+		// System.out.println(nb);
 		return nb;
-		
+
 	}
-	
+
+	public HashMap<String, Integer> nbCoursPType(String path_fichier,
+			HashMap<String, Integer> hs) throws FileNotFoundException,
+			SAXException, IOException, ParserConfigurationException {
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(
+				new FileInputStream(path_fichier));
+
+		Element E, E_1;
+
+		// liste des enseignants
+		NodeList etudiants = ((org.w3c.dom.Document) doc)
+				.getElementsByTagName("Cours");
+		NodeList L;
+		Integer nbCM = hs.get("CM");
+		Integer nbTD = hs.get("TD");
+		Integer nbTP = hs.get("TP");
+		
+		
+		
+		
+		
+
+		for (int index = 0; index < etudiants.getLength(); index++) {
+			E = (Element) etudiants.item(index);
+
+			L = E.getElementsByTagName("Type");
+			E_1 = (Element) L.item(0);
+			
+			if (E_1.getTextContent().contains("Cours Magistral")) {
+				nbCM = new Integer(nbCM.intValue() + 1);
+			}
+			else if (E_1.getTextContent().contains("Travaux diriges")){
+				nbTD = new Integer(nbTD.intValue() + 1);
+			}
+			else if (E_1.getTextContent().contains("Travaux pratiques")){
+				nbTP = new Integer(nbTP.intValue() + 1);
+			}
+
+		}
+		hs.put("CM", nbCM);
+		hs.put("TD", nbTD);
+		hs.put("TP", nbTP);
+		
+
+		return hs;
+
+	}
+
 }

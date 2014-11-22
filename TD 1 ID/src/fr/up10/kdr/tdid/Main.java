@@ -15,6 +15,7 @@ public class Main {
 		
 			monMediateur.NbHeureEnseignant();
 			monMediateur.nbEtuOrigFrance();
+			monMediateur.nbCourspType();
 		
 	}
 
