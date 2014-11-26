@@ -52,11 +52,7 @@ public class Oracle
             System.err.println("Erreur de deconnexion à la base de données.");
         }    
     }
-    
-    public HashMap <Integer, Integer> nbHeuresEnseignant( HashMap <Integer,Integer> hs ){
- 
-    	return hs;
-    }
+
 
 	public Integer nbEtuOrigFrance(Integer nb) {
 		return nb;

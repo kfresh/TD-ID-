@@ -157,16 +157,19 @@ public class Mediateur {
 
 	public void NbHeureEnseignant() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException{
 		HashMap nbHeureEnsHs = new HashMap <Integer,Integer> ();
+
+		if (dictionnaire.get("Enseigne").get("Heures").contains("S2"))
+		{
+			//La source Oracle ne contient pas cette donnée pour le moment
+			
+		}
 		if (dictionnaire.get("Enseigne").get("Heures").contains("S3"))
 		{
 		monXML.nbHeuresEnseignant("Univ_BD_3.xml", nbHeureEnsHs);
 		}
 		
 		nbHeureEnsHs.size();
-		if (dictionnaire.get("Enseigne").get("Heures").contains("S2"))
-		{
-			monOracle.nbHeuresEnseignant( nbHeureEnsHs);
-		}
+
 		
 		
 		
