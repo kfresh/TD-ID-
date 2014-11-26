@@ -18,6 +18,11 @@ public class Mediateur {
 	private Oracle monOracle;
 	private Excel monExcel;
 
+	//S1 = source excel
+	//S2 = source oracle
+	//S3 = source xml
+	
+	
 	public Mediateur() {
 		monXML = new XML();
 		monOracle = new Oracle();
