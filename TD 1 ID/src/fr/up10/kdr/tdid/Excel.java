@@ -18,6 +18,8 @@ public class Excel {
     
     public void connexion() throws SQLException, ClassNotFoundException
     {
+    	
+
         try
         {
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
@@ -29,7 +31,12 @@ public class Excel {
         
         try 
         {
-             this.conn = DriverManager.getConnection("jdbc:odbc:Excel Files","", "");
+        	String str= "C:\\Users\\Kader\\git\\TD-ID-\\TD 1 ID\\Source3.xls;";
+        	
+        	//{Microsoft Excel Driver (*.xls)};DriverId=790;DBQ=D:\inetpub\db\fichier.xls;DefaultDir=D:\inetpub\db;
+        	//this.conn = DriverManager.getConnection("jdbc:odbc:Excel Files","", "");
+        	
+        	this.conn = DriverManager.getConnection("jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DriverId=22;DBQ=" + str,"", "");
         }
         catch (SQLException ex) 
         {
