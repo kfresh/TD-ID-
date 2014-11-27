@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -31,12 +32,8 @@ public class Excel {
         
         try 
         {
-        	String str= "C:\\Users\\Kader\\git\\TD-ID-\\TD 1 ID\\Source3.xls;";
-        	
-        	//{Microsoft Excel Driver (*.xls)};DriverId=790;DBQ=D:\inetpub\db\fichier.xls;DefaultDir=D:\inetpub\db;
-        	//this.conn = DriverManager.getConnection("jdbc:odbc:Excel Files","", "");
-        	
-        	this.conn = DriverManager.getConnection("jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DriverId=22;DBQ=" + str,"", "");
+
+            this.conn = DriverManager.getConnection("jdbc:odbc:Excel Files","", "");
         }
         catch (SQLException ex) 
         {
@@ -54,5 +51,37 @@ public class Excel {
         {
             System.err.println("Excel Erreur de deconnexion à la base de données.");
         }
+    }
+    
+    public void nbEtuOrigFrance(){
+    	Statement requete = null; 
+    	ResultSet resultat = null;
+    	try {
+    		
+    		connexion();
+			requete = conn.createStatement();
+			resultat= requete.executeQuery("Select * from [2006$] UNION Select * from [2007$]");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Excel Erreur de deconnexion au SQL");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Excel Erreur de deconnexion au fichier");
+		}
+    	 try {
+			while(resultat.next())
+			{
+				
+				System.out.println(resultat.getString(2));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	
+    	//return nb;
     }
 }

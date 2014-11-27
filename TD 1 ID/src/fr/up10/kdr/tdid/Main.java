@@ -14,12 +14,16 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		Excel monExcel =new Excel();
+		Oracle monOracle = new Oracle();
+
 		try {
 			monExcel.connexion();
+			monExcel.nbEtuOrigFrance();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	

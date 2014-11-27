@@ -193,7 +193,8 @@ public class Mediateur {
 		
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S2"))
 		{
-		monOracle.nbEtuOrigFrance(nb);
+		nb = monOracle.nbEtuOrigFrance(nb);
+		
 		}
 		System.out.println("il y a " + nb.toString() + " étudiants provenant de France");
 		
@@ -207,13 +208,24 @@ public class Mediateur {
 		hs.put("TD", new Integer(0));
 		hs.put("TP", new Integer(0));
 		
+		
+		if (dictionnaire.get("Cours").get("Type").contains("S2"))
+		{
+		monOracle.nbCoursPType("Univ_BD_3.xml", hs);
+
+		}
 		if (dictionnaire.get("Cours").get("Type").contains("S3"))
 		{
 		monXML.nbCoursPType("Univ_BD_3.xml", hs);
+
+		}
+
+		
 		System.out.println(hs.get("CM").toString()+ " Cours Magistaux");
 		System.out.println(hs.get("TD").toString()+ " Travaux dirigés");
-		System.out.println(hs.get("TP").toString()+ " Travaux pratiques");
-		}
+		System.out.println(hs.get("TP").toString()+ " Travaux pratiques");		
+		
+		
 	}
 
 }

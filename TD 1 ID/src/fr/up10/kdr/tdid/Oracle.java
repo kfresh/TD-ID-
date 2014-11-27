@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,7 +32,7 @@ public class Oracle
         
         try 
         {
-            this.conn = DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:miage", "videlcro", "miage");
+            this.conn = DriverManager.getConnection("jdbc:oracle:thin:@miage03.dmiage.u-paris10.fr:1521:miage", "absaidso", "apprentis2012pw");
 //"jdbc:oracle:thin:@172.19.255.3:1521:MIAGE"
 
         }
@@ -55,7 +56,76 @@ public class Oracle
 
 
 	public Integer nbEtuOrigFrance(Integer nb) {
+		Statement requete = null;
+		ResultSet resultat = null;
+		ArrayList<Integer> listIdEtudiant = new ArrayList<Integer>();
+		
+		try {
+			connexion();
+			requete = conn.createStatement();
+			
+			//à modifier avec adaptateur
+			
+			resultat = requete.executeQuery("SELECT ID_ETUDIANT FROM ETUDIANT WHERE PROVENANCE='fr'");
+			while (resultat.next()) {
+				listIdEtudiant.add(resultat.getInt("ID_ETUDIANT"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			deconnexion();
+		}
+	
+		
+		nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
+		
 		return nb;
+		
+		
+	}
+
+	public void nbCoursPType(String string, HashMap<String, Integer> hs) {
+		// TODO Auto-generated method stub
+		
+		Statement requete = null;
+		ResultSet resultat = null;
+		
+		
+		Integer nbCM = hs.get("CM");
+		Integer nbTD = hs.get("TD");
+		Integer nbTP = hs.get("TP");
+		
+		try {
+			connexion();
+			requete = conn.createStatement();
+			
+			//à modifier avec adaptateur
+			
+			resultat = requete.executeQuery("SELECT * FROM COURS");
+			while (resultat.next()) {
+				String str = resultat.getString("TYPE");
+				if (str.contains("CM")) {
+					nbCM = new Integer(nbCM.intValue() + 1);
+				}
+				else if (str.contains("TD")){
+					nbTD = new Integer(nbTD.intValue() + 1);
+				}
+				else if (str.contains("TP")){
+					nbTP = new Integer(nbTP.intValue() + 1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			deconnexion();
+		}
+		hs.put("CM", nbCM);
+		hs.put("TD", nbTD);
+		hs.put("TP", nbTP);
 		
 		
 	}
