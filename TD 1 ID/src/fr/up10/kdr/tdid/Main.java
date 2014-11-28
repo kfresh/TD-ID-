@@ -18,13 +18,14 @@ public class Main {
 
 		try {
 			monExcel.connexion();
-			monExcel.nbEtuOrigFrance();
+			monOracle.connexion();
+			//monExcel.nbEtuOrigFrance();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erreuuuur");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erreuuuur");
 		}
     	
 		Mediateur monMediateur = new Mediateur();

@@ -29,7 +29,7 @@ public class Mediateur {
 
 		dictionnaire = new HashMap<String, HashMap<String, ArrayList>>();
 
-		dictionnaire.put("Etudiant", new HashMap());
+		dictionnaire.put("Etudiant", new HashMap <String, ArrayList>());
 		dictionnaire.put("Enseignant", new HashMap());
 		dictionnaire.put("Cours", new HashMap());
 		dictionnaire.put("Inscription", new HashMap());
@@ -206,7 +206,7 @@ public class Mediateur {
 
 	public void nbEtuOrigFrance() throws FileNotFoundException, SAXException,
 			IOException, ParserConfigurationException {
-		Integer nb = null;
+		Integer nb = Integer.valueOf(0);
 
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S1")) {
 			nb = monExcel.nbEtuOrigFrance(nb);
@@ -240,7 +240,7 @@ public class Mediateur {
 
 		}
 		if (dictionnaire.get("Cours").get("Type").contains("S2")) {
-			monOracle.nbCoursPType("Univ_BD_3.xml", hs);
+			monOracle.nbCoursPType(hs);
 
 		}
 		if (dictionnaire.get("Cours").get("Type").contains("S3")) {

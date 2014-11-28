@@ -19,7 +19,7 @@ public class Oracle
         super();
     }
     
-    private void connexion() throws SQLException, ClassNotFoundException
+    public void connexion() throws SQLException, ClassNotFoundException
     {
         try
         {
@@ -38,7 +38,7 @@ public class Oracle
         }
         catch (SQLException ex) 
         {
-            System.err.println("Erreur de connexion à la base de données.");
+            System.err.println("Erreur de connexion à la base de données Oracle.");
         }  
     }
     
@@ -70,23 +70,29 @@ public class Oracle
 			while (resultat.next()) {
 				listIdEtudiant.add(resultat.getInt("ID_ETUDIANT"));
 			}
+	
+			nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// TODO Auto-generated catch block
+			System.err.println("Excel Erreur de deconnexion au SQL");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
+			// TODO Auto-generated catch block
+			System.err.println("Excel Erreur de deconnexion au fichier");
+		}
+		finally {
 			deconnexion();
 		}
 	
 		
-		nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
+		//nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
 		
 		return nb;
 		
 		
 	}
 
-	public void nbCoursPType(String string, HashMap<String, Integer> hs) {
+	public void nbCoursPType(HashMap<String, Integer> hs) {
 		// TODO Auto-generated method stub
 		
 		Statement requete = null;
