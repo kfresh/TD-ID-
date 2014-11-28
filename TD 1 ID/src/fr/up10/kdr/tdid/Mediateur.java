@@ -246,6 +246,8 @@ public class Mediateur {
 
 		}
 
+		
+		
 		/*System.out.println(hs.get("CM").toString() + " Cours Magistaux");
 		System.out.println(hs.get("TD").toString() + " Travaux dirigés");
 		System.out.println(hs.get("TP").toString() + " Travaux pratiques");*/
