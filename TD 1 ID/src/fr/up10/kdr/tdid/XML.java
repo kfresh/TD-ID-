@@ -3,6 +3,7 @@ package fr.up10.kdr.tdid;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -121,8 +122,8 @@ public class XML {
 
 	}
 
-	public HashMap<String, Integer> nbCoursPType(String path_fichier,
-			HashMap<String, Integer> hs) throws FileNotFoundException,
+	public void nbCoursPType(String path_fichier,
+			HashMap<String, ArrayList> hs) throws FileNotFoundException,
 			SAXException, IOException, ParserConfigurationException {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
 				.newInstance();
@@ -135,9 +136,9 @@ public class XML {
 		NodeList etudiants = ((org.w3c.dom.Document) doc)
 				.getElementsByTagName("Cours");
 		NodeList L;
-		Integer nbCM = hs.get("CM");
+		/*Integer nbCM = hs.get("CM");
 		Integer nbTD = hs.get("TD");
-		Integer nbTP = hs.get("TP");
+		Integer nbTP = hs.get("TP");*/
 		
 		
 		
@@ -150,23 +151,46 @@ public class XML {
 			L = E.getElementsByTagName("Type");
 			E_1 = (Element) L.item(0);
 			
+			L = E.getElementsByTagName("ID_cours");
+			E_1 = (Element) L.item(0); // un seul noeud NumEt
+			String id = E_1.getTextContent();
+			
 			if (E_1.getTextContent().contains("Cours Magistral")) {
-				nbCM = new Integer(nbCM.intValue() + 1);
+				if (hs.containsKey(id)) {
+					if (!hs.get(id).contains("CM")) {
+						hs.get(id).add("CM");
+					}
+				} else {
+						hs.put(id, new ArrayList());
+				}
+				
+				//nbCM = new Integer(nbCM.intValue() + 1);
 			}
 			else if (E_1.getTextContent().contains("Travaux diriges")){
-				nbTD = new Integer(nbTD.intValue() + 1);
+				if (hs.containsKey(id)) {
+					if (!hs.get(id).contains("TD")) {
+						hs.get(id).add("TD");
+					}
+				} else {
+						hs.put(id, new ArrayList());
+				}
+				
+				//nbTD = new Integer(nbTD.intValue() + 1);
 			}
 			else if (E_1.getTextContent().contains("Travaux pratiques")){
-				nbTP = new Integer(nbTP.intValue() + 1);
+				if (hs.containsKey(id)) {
+					if (!hs.get(id).contains("TP")) {
+						hs.get(id).add("TP");
+					}
+				} else {
+						hs.put(id, new ArrayList());
+				}
+				
+				
 			}
 
 		}
-		hs.put("CM", nbCM);
-		hs.put("TD", nbTD);
-		hs.put("TP", nbTP);
-		
 
-		return hs;
 
 	}
 

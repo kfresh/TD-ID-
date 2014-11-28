@@ -83,12 +83,14 @@ public class Excel {
 
 	}
 
-	public void nbCoursPType(HashMap<String, Integer> hs) {
+	public void nbCoursPType(HashMap<String, ArrayList> hs) {
 		Statement requete = null;
 		ResultSet resultat = null;
-		HashMap<Integer, String> hsCM = new HashMap<Integer, String>();
-		HashMap<Integer, String> hsTP = new HashMap<Integer, String>();
-		HashMap<Integer, String> hsTD = new HashMap<Integer, String>();
+		/*
+		 * HashMap<Integer, String> hsCM = new HashMap<Integer, String>();
+		 * HashMap<Integer, String> hsTP = new HashMap<Integer, String>();
+		 * HashMap<Integer, String> hsTD = new HashMap<Integer, String>();
+		 */
 
 		try {
 
@@ -98,34 +100,61 @@ public class Excel {
 					.executeQuery("Select * from [2006$] UNION Select * from [2007$]");
 			while (resultat.next()) {
 				String type = resultat.getString(10);
+				String id = String.valueOf(resultat.getInt(8));
 				if (type.contains("CM")) {
-					hsCM.put(Integer.valueOf(resultat.getInt(8)),
-							resultat.getString(9));
-				}
-				if (type.contains("TP")) {
-					hsTP.put(Integer.valueOf(resultat.getInt(8)),
-							resultat.getString(9));
-				}
-				if (type.contains("TD")) {
-					hsTD.put(Integer.valueOf(resultat.getInt(8)),
-							resultat.getString(9));
+
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("CM")) {
+							hs.get(id).add("CM");
+						}
+					} else {
+							hs.put(id, new ArrayList());
+					}
 				}
 
-			}
+				if (type.contains("TP")) {
+
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("TP")) {
+							hs.get(id).add("TP");
+						}
+					}
+					else {
+						hs.put(id, new ArrayList());
+						hs.get(id).add("TP");
+					}
+				}
+				if (type.contains("TD")) {
+
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("TD")) {
+							hs.get(id).add("TP");
+						}
+					}
+					else {
+						hs.put(id, new ArrayList());
+						hs.get(id).add("TD");
+					}
+					}
+				}
+
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Excel Erreur de deconnexion SQL (Excel)");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Excel Erreur de deconnexion au fichier");
+		} finally {
+			deconnexion();
 		}
-
-		Integer nbCM = Integer.valueOf(hsCM.size());
-		Integer nbTD = Integer.valueOf(hsTD.size());
-		Integer nbTP = Integer.valueOf(hsTP.size());
-
-		hs.put("CM", nbCM);
-		hs.put("TD", nbTD);
-		hs.put("TP", nbTP);
+		System.out.println(hs.size());
+		/*
+		 * Integer nbCM = Integer.valueOf(hsCM.size()); Integer nbTD =
+		 * Integer.valueOf(hsTD.size()); Integer nbTP =
+		 * Integer.valueOf(hsTP.size());
+		 * 
+		 * hs.put("CM", nbCM); hs.put("TD", nbTD); hs.put("TP", nbTP);
+		 */
 	}
 }

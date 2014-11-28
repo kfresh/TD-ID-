@@ -207,7 +207,7 @@ public class Mediateur {
 	public void nbEtuOrigFrance() throws FileNotFoundException, SAXException,
 			IOException, ParserConfigurationException {
 		Integer nb = Integer.valueOf(0);
-
+		
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S1")) {
 			nb = monExcel.nbEtuOrigFrance(nb);
 
@@ -229,11 +229,9 @@ public class Mediateur {
 
 	public void nbCourspType() throws FileNotFoundException, SAXException,
 			IOException, ParserConfigurationException {
-		HashMap<String, Integer> hs = new HashMap<String, Integer>();
+		HashMap<String, ArrayList> hs = new HashMap<String, ArrayList>();
 
-		hs.put("CM", new Integer(0));
-		hs.put("TD", new Integer(0));
-		hs.put("TP", new Integer(0));
+
 
 		if (dictionnaire.get("Cours").get("Type").contains("S1")) {
 			monExcel.nbCoursPType(hs);
@@ -248,9 +246,9 @@ public class Mediateur {
 
 		}
 
-		System.out.println(hs.get("CM").toString() + " Cours Magistaux");
+		/*System.out.println(hs.get("CM").toString() + " Cours Magistaux");
 		System.out.println(hs.get("TD").toString() + " Travaux dirigés");
-		System.out.println(hs.get("TP").toString() + " Travaux pratiques");
+		System.out.println(hs.get("TP").toString() + " Travaux pratiques");*/
 
 	}
 

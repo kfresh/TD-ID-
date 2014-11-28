@@ -92,16 +92,14 @@ public class Oracle
 		
 	}
 
-	public void nbCoursPType(HashMap<String, Integer> hs) {
+	public void nbCoursPType(HashMap<String, ArrayList> hs) {
 		// TODO Auto-generated method stub
 		
 		Statement requete = null;
 		ResultSet resultat = null;
 		
 		
-		Integer nbCM = hs.get("CM");
-		Integer nbTD = hs.get("TD");
-		Integer nbTP = hs.get("TP");
+		
 		
 		try {
 			connexion();
@@ -112,14 +110,43 @@ public class Oracle
 			resultat = requete.executeQuery("SELECT * FROM COURS");
 			while (resultat.next()) {
 				String str = resultat.getString("TYPE");
+				String id = String.valueOf(resultat.getInt("NumCours"));
 				if (str.contains("CM")) {
-					nbCM = new Integer(nbCM.intValue() + 1);
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("CM")) {
+							hs.get(id).add("CM");
+						}
+					} else {
+							hs.put(id, new ArrayList());
+					}
+					
+					//nbCM = new Integer(nbCM.intValue() + 1);
 				}
 				else if (str.contains("TD")){
-					nbTD = new Integer(nbTD.intValue() + 1);
+					
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("TP")) {
+							hs.get(id).add("TP");
+						}
+					}
+					else {
+						hs.put(id, new ArrayList());
+						hs.get(id).add("TP");
+					}
+					//nbTD = new Integer(nbTD.intValue() + 1);
 				}
 				else if (str.contains("TP")){
-					nbTP = new Integer(nbTP.intValue() + 1);
+					
+					if (hs.containsKey(id)) {
+						if (!hs.get(id).contains("TP")) {
+							hs.get(id).add("TP");
+						}
+					}
+					else {
+						hs.put(id, new ArrayList());
+						hs.get(id).add("TP");
+					}
+					//nbTP = new Integer(nbTP.intValue() + 1);
 				}
 			}
 		} catch (SQLException e) {
@@ -129,10 +156,7 @@ public class Oracle
 		} finally {
 			deconnexion();
 		}
-		hs.put("CM", nbCM);
-		hs.put("TD", nbTD);
-		hs.put("TP", nbTP);
-		
+		System.out.println("Oracle:"+hs.size() );
 		
 	}
 }
