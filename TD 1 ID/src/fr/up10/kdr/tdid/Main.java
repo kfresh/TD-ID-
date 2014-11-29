@@ -12,10 +12,10 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
 		// TODO Auto-generated method stub
-		
+		System.out.println("PROOOOBLEME");
 		Excel monExcel =new Excel();
 		Oracle monOracle = new Oracle();
-
+		
 		try {
 			monExcel.connexion();
 			monOracle.connexion();

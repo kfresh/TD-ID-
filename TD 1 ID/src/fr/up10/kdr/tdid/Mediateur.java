@@ -207,7 +207,7 @@ public class Mediateur {
 	public void nbEtuOrigFrance() throws FileNotFoundException, SAXException,
 			IOException, ParserConfigurationException {
 		Integer nb = Integer.valueOf(0);
-		
+		System.out.println("PROOOOBLEME");
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S1")) {
 			nb = monExcel.nbEtuOrigFrance(nb);
 
@@ -245,7 +245,25 @@ public class Mediateur {
 			monXML.nbCoursPType("Univ_BD_3.xml", hs);
 
 		}
+		
+		int nbCM = 0;
+		int nbTP = 0;
+		int nbTD = 0;
+		
+		for (String mapKey : hs.keySet()) {
+			System.out.println(mapKey);
+			if (hs.get(mapKey).contains("CM"))
+				nbCM++;
+			if (hs.get(mapKey).contains("TD"))
+				nbTD++;
+			if (hs.get(mapKey).contains("TP"))
+				nbTP++;
 
+		}
+
+		System.out.println(nbCM + " Cours Magistraux");
+		System.out.println(nbTD + " Travaux Dirigés");
+		System.out.println(nbTP + " Travaux pratiques");
 		
 		
 		/*System.out.println(hs.get("CM").toString() + " Cours Magistaux");
