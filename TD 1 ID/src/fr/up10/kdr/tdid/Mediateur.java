@@ -207,22 +207,24 @@ public class Mediateur {
 	public void nbEtuOrigFrance() throws FileNotFoundException, SAXException,
 			IOException, ParserConfigurationException {
 		Integer nb = Integer.valueOf(0);
-		System.out.println("PROOOOBLEME");
+		ArrayList etuOrigFr = new ArrayList();
+		
+		
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S1")) {
-			nb = monExcel.nbEtuOrigFrance(nb);
+			monExcel.nbEtuOrigFrance(etuOrigFr);
 
 		}
 
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S2")) {
-			nb = monOracle.nbEtuOrigFrance(nb);
+			monOracle.nbEtuOrigFrance(etuOrigFr);
 
 		}
 
 		if (dictionnaire.get("Etudiant").get("Provenance").contains("S3")) {
-			nb = monXML.nbEtuOrigFrance("Univ_BD_3.xml", nb);
+			monXML.nbEtuOrigFrance("Univ_BD_3.xml", etuOrigFr);
 		}
 
-		System.out.println("il y a " + nb.toString()
+		System.out.println("il y a " + etuOrigFr.size()
 				+ " étudiants provenant de France");
 
 	}
@@ -251,7 +253,7 @@ public class Mediateur {
 		int nbTD = 0;
 		
 		for (String mapKey : hs.keySet()) {
-			System.out.println(mapKey);
+			
 			if (hs.get(mapKey).contains("CM"))
 				nbCM++;
 			if (hs.get(mapKey).contains("TD"))

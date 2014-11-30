@@ -51,14 +51,16 @@ public class Oracle
         catch (SQLException ex) 
         {
             System.err.println("Erreur de deconnexion à la base de données.");
+        }catch (NullPointerException ex) 
+        {
+            System.err.println("Connexion non existante.");
         }    
     }
 
 
-	public Integer nbEtuOrigFrance(Integer nb) {
+	public void nbEtuOrigFrance(ArrayList <String> listEtu) {
 		Statement requete = null;
 		ResultSet resultat = null;
-		ArrayList<Integer> listIdEtudiant = new ArrayList<Integer>();
 		
 		try {
 			connexion();
@@ -68,10 +70,12 @@ public class Oracle
 			
 			resultat = requete.executeQuery("SELECT ID_ETUDIANT FROM ETUDIANT WHERE PROVENANCE='fr'");
 			while (resultat.next()) {
-				listIdEtudiant.add(resultat.getInt("ID_ETUDIANT"));
+				int id = resultat.getInt("ID_ETUDIANT");
+				if (!listEtu.contains(id)) listEtu.add(String.valueOf(id));
 			}
 	
-			nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
+			
+			deconnexion();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -79,15 +83,16 @@ public class Oracle
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Excel Erreur de deconnexion au fichier");
+		}catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Valeur Nulle");
 		}
-		finally {
-			deconnexion();
-		}
+		
 	
 		
 		//nb = Integer.valueOf(nb.intValue() + listIdEtudiant.size());
 		
-		return nb;
+	
 		
 		
 	}
@@ -149,14 +154,17 @@ public class Oracle
 					//nbTP = new Integer(nbTP.intValue() + 1);
 				}
 			}
+			deconnexion();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} finally {
-			deconnexion();
+		}catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Valeur Nulle");
 		}
-		System.out.println("Oracle:"+hs.size() );
+		
+		
 		
 	}
 }

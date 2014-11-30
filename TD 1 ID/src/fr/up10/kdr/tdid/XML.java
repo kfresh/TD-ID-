@@ -86,7 +86,7 @@ public class XML {
 
 	}
 
-	public Integer nbEtuOrigFrance(String path_fichier, Integer nb)
+	public void nbEtuOrigFrance(String path_fichier, ArrayList listEtu)
 			throws FileNotFoundException, SAXException, IOException,
 			ParserConfigurationException {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
@@ -95,7 +95,7 @@ public class XML {
 				new FileInputStream(path_fichier));
 
 		Element E, E_1;
-		Integer i = 0;
+		
 		// liste des enseignants
 		NodeList etudiants = ((org.w3c.dom.Document) doc)
 				.getElementsByTagName("Etudiant");
@@ -111,14 +111,13 @@ public class XML {
 			
 
 			if (E_1.getTextContent().contains("France")) {
-				i++;
-
+				L = E.getElementsByTagName("NumEt");
+				E_1 = (Element) L.item(0);
+				listEtu.add(E_1.getTextContent());
 			}
 
 		}
-		nb = nb + i;
-		// System.out.println(nb);
-		return nb;
+
 
 	}
 
@@ -130,7 +129,7 @@ public class XML {
 		org.w3c.dom.Document doc = builderFactory.newDocumentBuilder().parse(
 				new FileInputStream(path_fichier));
 
-		Element E, E_1;
+		Element E, E_1,E_2;
 
 		// liste des enseignants
 		NodeList etudiants = ((org.w3c.dom.Document) doc)
@@ -152,10 +151,10 @@ public class XML {
 			E_1 = (Element) L.item(0);
 			
 			L = E.getElementsByTagName("ID_cours");
-			E_1 = (Element) L.item(0); // un seul noeud NumEt
-			String id = E_1.getTextContent();
+			E_2 = (Element) L.item(0); // un seul noeud NumEt
+			String id = E_2.getTextContent();
 			
-			if (E_1.getTextContent().contains("Cours Magistral")) {
+			if (E_2.getTextContent().contains("Cours Magistral")) {
 				if (hs.containsKey(id)) {
 					if (!hs.get(id).contains("CM")) {
 						hs.get(id).add("CM");

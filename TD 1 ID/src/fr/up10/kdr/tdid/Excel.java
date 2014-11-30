@@ -30,7 +30,7 @@ public class Excel {
 					"", "");
 		} catch (SQLException ex) {
 			System.err
-					.println("Excel Erreur de connexion à la base de données Excel");
+					.println("Excel Erreur de connexion à la base de données Excel.");
 		}
 	}
 
@@ -43,10 +43,10 @@ public class Excel {
 		}
 	}
 
-	public Integer nbEtuOrigFrance(Integer nb) {
+	public void nbEtuOrigFrance(ArrayList listEtu) {
 		Statement requete = null;
 		ResultSet resultat = null;
-		HashMap<Integer, String> hsEtu = new HashMap<Integer, String>();
+		
 
 		try {
 
@@ -56,13 +56,14 @@ public class Excel {
 					.executeQuery("Select * from [2006$] UNION Select * from [2007$]");
 
 			while (resultat.next()) {
+				String id = resultat.getString(1);
 				String origine = resultat.getString(5);
-				if (resultat.getString(4).contains("etudiant")
+				String type = resultat.getString(4);
+				//System.out.println(id +"pppp");
+				if (type.contains("etudiant")
 						&& (origine.contains("France"))) {
-
-					hsEtu.put(Integer.valueOf(resultat.getInt(1)),
-							resultat.getString(2));
-
+					if (!listEtu.contains(id)) listEtu.add(id);
+					
 				}
 
 			}
@@ -78,8 +79,6 @@ public class Excel {
 			deconnexion();
 		}
 
-		nb = Integer.valueOf(nb.intValue() + hsEtu.size());
-		return nb;
 
 	}
 
@@ -148,7 +147,6 @@ public class Excel {
 		} finally {
 			deconnexion();
 		}
-		System.out.println(hs.size());
 		/*
 		 * Integer nbCM = Integer.valueOf(hsCM.size()); Integer nbTD =
 		 * Integer.valueOf(hsTD.size()); Integer nbTP =
